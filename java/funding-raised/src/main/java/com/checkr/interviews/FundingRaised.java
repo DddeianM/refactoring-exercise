@@ -7,16 +7,7 @@ import java.io.IOException;
 
 public class FundingRaised {
     public static List<Map<String, String>> where(Map<String, String> options) throws IOException {
-        List<String[]> csvData = new ArrayList<String[]>();
-        CSVReader reader = new CSVReader(new FileReader("startup_funding.csv"));
-        String[] row = null;
-
-        while((row = reader.readNext()) != null) {
-            csvData.add(row);
-        }
-
-        reader.close();
-        csvData.remove(0);
+        List<String[]> csvData = AddCSVData();
 
         if(options.containsKey("company_name")) {
             List<String[]> results = new ArrayList<String[]> ();
@@ -74,16 +65,8 @@ public class FundingRaised {
     }
 
     public static Map<String, String> findBy(Map<String, String> options) throws IOException, NoSuchEntryException {
-        List<String[]> csvData = new ArrayList<String[]>();
-        CSVReader reader = new CSVReader(new FileReader("startup_funding.csv"));
-        String[] row = null;
+        List<String[]> csvData = AddCSVData();
 
-        while((row = reader.readNext()) != null) {
-            csvData.add(row);
-        }
-
-        reader.close();
-        csvData.remove(0);
         Map<String, String> mapped = new HashMap<String, String> ();
 
         for(int i = 0; i < csvData.size(); i++) {
@@ -123,6 +106,20 @@ public class FundingRaised {
         }
 
         throw new NoSuchEntryException();
+    }
+
+    public static List<String[]> AddCSVData() throws IOException {
+        List<String[]> csvData = new ArrayList<String[]>();
+        CSVReader reader = new CSVReader(new FileReader("startup_funding.csv"));
+        String[] row = null;
+
+        while((row = reader.readNext()) != null) {
+            csvData.add(row);
+        }
+
+        reader.close();
+        csvData.remove(0);
+        return csvData;
     }
 
     public static void csvMapping(List<String[]> csvData, Map<String, String> mapped, int i) {
