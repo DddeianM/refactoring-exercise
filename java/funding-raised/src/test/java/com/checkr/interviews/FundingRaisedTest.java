@@ -187,15 +187,14 @@ public class FundingRaisedTest
 
     public void testFindByNotExists() {
         try {
-            Map<String, String> options = new HashMap<String, String> ();
+            Map<String, String> options = new HashMap<String, String>();
             options.put("company_name", "NotFacebook");
             options.put("round", "c");
             Map<String, String> row = FundingRaised.findBy(options);
             fail("findBy should throw exception");
-        } catch(IOException e) {
+        } catch (IOException | NoSuchEntryException e) {
             System.out.print(e.getMessage());
             System.out.print("error");
-        } catch(NoSuchEntryException e) {
         }
     }
 }
